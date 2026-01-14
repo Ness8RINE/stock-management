@@ -1,10 +1,12 @@
-export default function InventoryPage() {
-    return (
-        <div className="space-y-6">
-            <h2 className="text-3xl font-bold tracking-tight">Stock</h2>
-            <div className="rounded-2xl border border-slate-100 bg-white shadow-sm p-8 min-h-[400px] flex items-center justify-center">
-                <p className="text-slate-500">Gestion du stock en cours de développement...</p>
-            </div>
-        </div>
-    );
+import { getInventory, getCategories, getUnits } from '@/app/actions/inventory';
+import InventoryClient from './InventoryClient';
+
+export default async function InventoryPage() {
+    const [inventoryData, categories, units] = await Promise.all([
+        getInventory(),
+        getCategories(),
+        getUnits()
+    ]);
+
+    return <InventoryClient initialData={inventoryData} categories={categories} units={units} />;
 }
