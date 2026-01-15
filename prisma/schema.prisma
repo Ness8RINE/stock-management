@@ -70,30 +70,54 @@ model Settings {
 }
 
 model Supplier {
-  id        String   @id @default(uuid())
-  name      String
-  email     String?
-  phone     String?
-  address   String?
-  country   String?
-  taxId     String? // NIF/NIS
-  createdAt DateTime @default(now())
+  id              String   @id @default(uuid())
+  code            String   @unique // Mandatory
+  name            String   // Mandatory
+  phone           String?
+  fax             String?
+  email           String?
+  address         String?
+  country         String?  @default("Algérie")
+  initialBalance  Float    @default(0)
+  contactPerson   String?
+  legalStatus     String?  // SARL, EURL, etc.
+  rcNum           String?  // Registre de Commerce
+  mfNum           String?  // Matricule Fiscal
+  nisNum          String?  // Numéro dIdentification Statistique
+  aiNum           String?  // Article dImposition
+  bankAccount     String?
   
-  purchases Purchase[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  purchases       Purchase[]
 }
 
 model Customer {
-  id        String   @id @default(uuid())
-  name      String
-  email     String?
-  phone     String?
-  address   String?
-  type      String? // Wholesale, Pharmacy, Hospital
-  taxId     String?
-  creditLimit Float?
-  createdAt DateTime @default(now())
+  id              String   @id @default(uuid())
+  code            String   @unique // Mandatory
+  name            String   // Mandatory
+  phone           String?
+  fax             String?
+  email           String?
+  address         String?
+  country         String?  @default("Algérie")
+  initialBalance  Float    @default(0)
+  contactPerson   String?
+  legalStatus     String?
+  rcNum           String?
+  mfNum           String?
+  nisNum          String?
+  aiNum           String?
+  bankAccount     String?
+  
+  type            String?  // Wholesale, Pharmacy, Hospital
+  creditLimit     Float?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  sales Sale[]
+  sales           Sale[]
 }
 
 // 3. Inventory System (Medical + Multi-Depot)
